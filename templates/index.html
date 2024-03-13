@@ -1,0 +1,60 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    NHS Wait Search
+{% endblock %}
+
+{% block main %}
+<div class="container-fluid title">
+    <h1 class="display-5 fw-bold multi-line-h1 spacer spaceside">NHS Scotland<br>Waiting List Search Tool</h1>
+</div>
+
+
+<div class="card cardround border-warning spaceside my-5">
+  <div class="row g-0">
+    <div class="col-md-7">
+      <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner cardround">
+          <div class="carousel-item active">
+            <img src="{{url_for('static', filename='flag.jpg')}}" class="d-block w-100 cardround" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="{{url_for('static', filename='nhstree.jpg')}}" class="d-block w-100 cardround" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="{{url_for('static', filename='surgery.jpg')}}" class="d-block w-100 cardround" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="{{url_for('static', filename='nhs.jpg')}}" class="d-block w-100 cardround" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="card-body">
+        <h4 class="card-title spacer">Welcome!</h4>
+        <p class="text-start fs-4 card-text">Effortlessly search into NHS scotland databases to assess waiting times by hospital and specialty, so you can find the fastest and best care possible.</p>
+        <form class="d-grid gap-2 spaceside my-4" action="/select/" method="get">
+          <button class="btn btn-warning btn-lg" type="submit" value="wait" role="button">Click Here to get started!</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}

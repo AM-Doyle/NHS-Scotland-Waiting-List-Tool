@@ -1,0 +1,103 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Inpatient and Outpatient
+{% endblock %}
+
+{% block main %}
+
+<div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">Inpatient and Outpatient waiting times</h1>
+    <p class="text-center fs-4">Enter the parameters you wish to search by below to see the waiting times</p>
+</div>
+
+<div class="container rcorner spacer">
+  <form class="row g-3" action="/search/" method="post">
+    <div class="col-md-12">
+      <label for="sorc" class="form-label spacer">Simple or Complex data?</label>
+      <select class="form-select" id="sorc" name="sorc" aria-label="simple or complex">
+        <option selected value="cwmar23">Simple (Easier to understand)</option>
+        <option value="docwmar23">Complex (All data available)</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="inputdate" class="form-label spacer">Quater Ending</label>
+      <select required="true" class="form-select" id="dates" name="dates" aria-label="Select which date to search for">
+          <option selected value="" disabled>Select which date to search for</option>
+          <option value="NOT NULL">All</option>
+          {% for i in dates %}
+            <option value="'{{ i.quarterending }}'">{{ i.quarterending }}</option>
+          {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="inputPassword4" class="form-label spacer">Health Board</label>
+      <select required="true" class="form-select" id="hb" name="hb" aria-label="Select which date to search for">
+        <option value="" selected disabled>Select which Health Board to search for</option>
+        <option value="NOT NULL">All</option>
+        {% for i in hb %}
+          <option value="'{{ i.hb1 }}'">{{ i.hbname }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="inputPassword4" class="form-label spacer">Patient type</label>
+      <select required="true" class="form-select" id="pttyp" name="pttyp" aria-label="Select which date to search for">
+        <option value="" selected disabled>Select which Patient Type to search for</option>
+        <option value="NOT NULL">All</option>
+        {% for i in pttyp %}
+          <option value="'{{ i.patienttype }}'">{{ i.patienttype }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="inputPassword4" class="form-label spacer">Specialty</label>
+      <select required="true" class="form-select" id="specialty" name="specialty" aria-label="Select which date to search for">
+        <option value="" selected disabled>Select which Specialty to search for</option>
+        <option value="NOT NULL">All</option>
+        {% for i in specialty %}
+          <option value="'{{ i.specialty1 }}'">{{ i.specialtyname }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-12 my-4">
+      <button class="btn btn-warning" type="submit">Search!</button>
+    </div>
+  </form>
+</div>
+
+<div style="{{ gumpy }}" class="rcorner table-responsive">
+<table cellpadding="15p" class="table table-light table-striped" >
+  <thead>
+      <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Health Board</th>
+          <th scope="col">Patient Type</th>
+          <th scope="col">Specialty</th>
+          <th scope="col">Number of Waits</th>
+          <th scope="col">No. waits over 12 weeks</th>
+          <th scope="col">Median wait time (Days)</th>
+          <th scope="col">Wait time at 90th centile (Days)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <!-- TODO: Loop through the database entries to display them in this table -->
+      {% for example in data %}
+          <tr>
+              <td>{{ example.quarterending }}</td>
+              <td>{{ example.hbname }}</td>
+              <td>{{ example.patienttype }}</td>
+              <td>{{ example.specialtyname }}</td>
+              <td>{{ example.numberofwaits }}</td>
+              <td>{{ example.over12weeks }}</td>
+              <td>{{ example.median }}</td>
+              <td>{{ example.w90thpercentile }}</td>
+          </tr>
+      {% endfor %}
+  </tbody>
+</table>
+</div>
+
+
+
+{% endblock %}

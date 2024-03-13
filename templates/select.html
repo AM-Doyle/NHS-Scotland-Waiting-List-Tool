@@ -1,0 +1,88 @@
+{% extends 'layout.html' %}
+
+{% block main %}
+
+<div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">Select Database</h1>
+    <p class="fs-4 text-center">Select which database you would like to search into</p>
+</div>
+
+
+
+<div class=" row row-cols-1 row-cols-md-3 g-4 px-5 mx-5">
+  <div class="col">
+    <div class="card h-100">
+      <img src="{{url_for('static', filename='inpatient.jpg')}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Inpatient and Outpatient waiting times</h5>
+        <p class="card-text">Assess the competed waiting times for all in and outpatient cases in Scotland. (Updated Quaterly)</p>
+      </div>
+      <form class="row g-3" action="/search/" method="get">
+        <button class="btn btn-primary btn-lg" type="submit" value="io" role="button">Select</button>
+      </form>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <img src="{{url_for('static', filename='mri.jpg')}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Diagnostic procedures current waiting list</h5>
+        <p class="card-text">See the current waiting list for diagnostic procedures and how long they have been waiting. (Updated Quaterly)</p>
+      </div>
+      <form class="row g-3" action="/diag/" method="get">
+        <button class="btn btn-success btn-lg" type="submit" value="diag" role="button">Select</button>
+      </form>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <img src="{{url_for('static', filename='psychological.jpg')}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Psychological therapies Waiting Times</h5>
+        <p class="card-text">See how many people are currently waiting for Psychological therepies and how long they have been waiting for.</p>
+      </div>
+      <form class="row g-3" action="/psy/" method="get">
+        <button class="btn btn-danger btn-lg" type="submit" value="psy" role="button">Select</button>
+      </form>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <img src="{{url_for('static', filename='camhs.jpg')}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Child and Adolescent Mental health Waiting Times</h5>
+        <p class="card-text">See the current number of patients waiting to access CAMHS services and assess the average waiting times.</p>
+      </div>
+      <form class="row g-3" action="/camh/" method="get">
+        <button class="btn btn-warning btn-lg" type="submit" value="camh" role="button">Select</button>
+      </form>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <img src="{{url_for('static', filename='Physiotherapy.jpg')}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">(AHP) Musculoskeletal Waiting Times</h5>
+        <p class="card-text">(MSK) services delivered by Allied Health Professionals in Physiotherapy, Occupational Therapy, Chiropody/Podiatry and Orthotics.</p>
+      </div>
+      <form class="row g-3" action="/mskseen/" method="get">
+        <button class="btn btn-info btn-lg" type="submit" value="seen" role="button">Select</button>
+      </form>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card h-100">
+      <img src="{{url_for('static', filename='ane.jpg')}}" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Monthly A&E Activity and Waiting Times</h5>
+        <p class="card-text">See the waiting times that patients recieved in A&E by location and department and total number of patients. (updated monthly)</p>
+      </div>
+      <form class="row g-3" action="/ane/" method="get">
+        <button class="btn btn-secondary btn-lg" type="submit" value="ane" role="button">Select</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

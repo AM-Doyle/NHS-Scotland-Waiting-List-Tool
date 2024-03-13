@@ -1,0 +1,90 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    A&E
+{% endblock %}
+
+{% block main %}
+
+<div class="container-fluid py-5">
+  <h1 class="display-5 fw-bold">Accident & Emergency Waiting Times</h1>
+  <p class="fs-4 text-center">Enter the parameters you wish to search by below to see the waiting times</p>
+</div>
+
+<div class="container rcorner spacer">
+  <form class="row g-3" action="/ane/" method="post">
+    <div class="col-md-6">
+      <label for="inputdate" class="form-label spacer">Month</label>
+      <select required="true" class="form-select" id="month" name="month" aria-label="Select which date to search for">
+        <option selected value="" disabled>Select which month</option>
+        <option value="NOT NULL">All</option>
+        {% for i in months %}
+          <option value="'{{ i.month }}'">{{ i.month }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="inputPassword4" class="form-label spacer">Health Board</label>
+      <select required="true" class="form-select" id="hb" name="hb" aria-label="Select which date to search for">
+        <option value="" selected disabled>Select which Health Board to search for</option>
+        <option value="NOT NULL">All</option>
+        {% for i in hb %}
+          <option value="'{{ i.hb1 }}'">{{ i.hbname }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="inputPassword4" class="form-label spacer">Department</label>
+      <select required="true" class="form-select" id="department" name="department" aria-label="Select which date to search for">
+        <option value="" selected disabled>Select which Department to search for</option>
+        <option value="NOT NULL">All</option>
+        {% for i in department %}
+          <option value="'{{ i.departmenttype }}'">{{ i.departmenttype }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-12 my-4">
+      <button class="btn btn-warning" type="submit">Search</button>
+    </div>
+  </form>
+</div>
+
+
+<div style="{{ gumpy }}" class="rcorner table-responsive">
+  <table style="font-size: 13px;" cellpadding="10p" class="table table-light table-striped table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">Month</th>
+        <th scope="col">Health Board</th>
+        <th scope="col">Hospital</th>
+        <th scope="col">Department</th>
+        <th scope="col">Total Number of Attendances</th>
+        <th scope="col">No. Seen within 4 hours (%)</th>
+        <th scope="col">No. Seen after 4 hours wait</th>
+        <th scope="col">No. Seen after 8 hours wait (%)</th>
+        <th scope="col">No. Seen after 12 hours wait (%)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- TODO: Loop through the database entries to display them in this table -->
+      {% for example in data %}
+        <tr>
+          <td>{{ example.month }}</td>
+          <td>{{ example.hbname }}</td>
+          <td>{{ example.locationname }}</td>
+          <td>{{ example.departmenttype }}</td>
+          <td>{{ example.numberofattendancesall }}</td>
+          <td>{{ example.numberwithin4hoursall }} ({{ example.percentagewithin4hoursall}}%)</td>
+          <td>{{ example.numberover4hoursall }}</td>
+          <td>{{ example.numberover8hoursepisode }} ({{ example.percentageover8hoursepisode}}%)</td>
+          <td>{{ example.numberover12hoursepisode }} ({{ example.percentageover12hoursepisode}}%)</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+
+{% endblock %}

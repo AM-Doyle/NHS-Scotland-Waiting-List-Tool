@@ -1,0 +1,135 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Inpatient and Outpatient
+{% endblock %}
+
+{% block main %}
+
+<div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">Inpatient and Outpatient waiting times (Complex Data)</h1>
+    <p class="text-center fs-4">Enter the parameters you wish to search by below to see the waiting times</p>
+</div>
+
+<div class="container rcorner spacer">
+<form class="row g-3" action="/search/" method="post">
+  <div class="col-md-12">
+    <label for="sorc" class="form-label spacer">Simple or Complex data?</label>
+    <select class="form-select" id="sorc" name="sorc" aria-label="simple or complex">
+      <option value="cwmar23">Simple (Easier to understand)</option>
+      <option selected value="docwmar23">Complex (All data available)</option>
+    </select>
+  </div>
+  <div class="col-md-6">
+    <label for="inputdate" class="form-label spacer">Quater Ending</label>
+    <select required="true" class="form-select" id="dates" name="dates" aria-label="Select which date to search for">
+        <option selected value="" disabled>Select which date to search for</option>
+        <option value="NOT NULL">All</option>
+        {% for i in dates %}
+          <option value="'{{ i.quarterending }}'">{{ i.quarterending }}</option>
+        {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-6">
+    <label for="inputPassword4" class="form-label spacer">Health Board</label>
+    <select required="true" class="form-select" id="hb" name="hb" aria-label="Select which date to search for">
+      <option value="" selected disabled>Select which Health Board to search for</option>
+      <option value="NOT NULL">All</option>
+      {% for i in hb %}
+        <option value="'{{ i.hb1 }}'">{{ i.hbname }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-6">
+    <label for="inputPassword4" class="form-label spacer">Patient type</label>
+    <select required="true" class="form-select" id="pttyp" name="pttyp" aria-label="Select which date to search for">
+      <option value="" selected disabled>Select which Patient Type to search for</option>
+      <option value="NOT NULL">All</option>
+      {% for i in pttyp %}
+        <option value="'{{ i.patienttype }}'">{{ i.patienttype }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-6">
+    <label for="inputPassword4" class="form-label spacer">Specialty</label>
+    <select required="true" class="form-select" id="specialty" name="specialty" aria-label="Select which date to search for">
+      <option value="" selected disabled>Select which Specialty to search for</option>
+      <option value="NOT NULL">All</option>
+      {% for i in specialty %}
+        <option value="'{{ i.specialty1 }}'">{{ i.specialtyname }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-12 my-4">
+    <button class="btn btn-warning" type="submit">Search</button>
+  </div>
+</form>
+</div>
+
+<label for="complex table" class="form-label">Table shows number of patients that waited each amount of time in weeks</label>
+<div style="{{ gumpy }}" class="rcorner table-responsive">
+  <table style="font-size: 13px;" cellpadding="10p" class="table table-light table-striped table-bordered">
+  <thead>
+      <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Health Board</th>
+          <th scope="col">Patient Type</th>
+          <th scope="col">Specialty</th>
+          <th scope="col">Total Waits</th>
+          <th scope="col">Less than 4</th>
+          <th scope="col">4-8</th>
+          <th scope="col">8-12</th>
+          <th scope="col">12-16</th>
+          <th scope="col">16-20</th>
+          <th scope="col">20-24</th>
+          <th scope="col">24-28</th>
+          <th scope="col">28-32</th>
+          <th scope="col">32-36</th>
+          <th scope="col">36-40</th>
+          <th scope="col">40-44</th>
+          <th scope="col">44-48</th>
+          <th scope="col">48-52</th>
+          <th scope="col">52-65</th>
+          <th scope="col">65-78</th>
+          <th scope="col">78-91</th>
+          <th scope="col">91-104</th>
+          <th scope="col">Over 104</th>
+
+      </tr>
+  </thead>
+  <tbody>
+      <!-- TODO: Loop through the database entries to display them in this table -->
+      {% for example in data %}
+          <tr>
+              <td>{{ example.quarterending }}</td>
+              <td>{{ example.hbname }}</td>
+              <td>{{ example.patienttype }}</td>
+              <td>{{ example.specialtyname }}</td>
+              <td>{{ example.numberofwaits }}</td>
+              <td>{{ example.lessthan4weekwait }}</td>
+              <td>{{ example.w4to8weekwait }}</td>
+              <td>{{ example.w8to12weekwait }}</td>
+              <td>{{ example.w12to16weekwait }}</td>
+              <td>{{ example.w16to20weekwait }}</td>
+              <td>{{ example.w20to24weekwait }}</td>
+              <td>{{ example.w24to28weekwait }}</td>
+              <td>{{ example.w28to32weekwait }}</td>
+              <td>{{ example.w32to36weekwait }}</td>
+              <td>{{ example.w36to40weekwait }}</td>
+              <td>{{ example.w40to44weekwait }}</td>
+              <td>{{ example.w44to48weekwait }}</td>
+              <td>{{ example.w48to52weekwait }}</td>
+              <td>{{ example.w52to65weekwait }}</td>
+              <td>{{ example.w65to78weekwait }}</td>
+              <td>{{ example.w78to91weekwait }}</td>
+              <td>{{ example.w91to104weekwait }}</td>
+              <td>{{ example.over104weekwait }}</td>
+          </tr>
+      {% endfor %}
+  </tbody>
+</table>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,105 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    MSK Waiting
+{% endblock %}
+
+{% block main %}
+
+<div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">MSK waiting times (Waiting)</h1>
+    <p class="text-center fs-4">Enter the parameters you wish to search by below to see the waiting times</p>
+</div>
+
+<div class="container rcorner spacer">
+    <form class="row g-3" action="/mskseen/" method="get">
+        <button class="btn btn-warning btn-lg" type="submit" value="wait" role="button">Click here to see waiting times for patients who have been seen</button>
+    </form>
+  <form class="row g-3" action="/mskwait/" method="post">
+    <div class="col-md-6">
+      <label for="inputdate" class="form-label spacer">Month</label>
+      <select required="true" class="form-select" id="month" name="month" aria-label="Select which date to search for">
+          <option selected value="" disabled>Select which month to search for</option>
+          <option value="NOT NULL">All</option>
+          {% for i in months %}
+            <option value="'{{ i.quarter }}'">{{ i.quarter }}</option>
+          {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="inputPassword4" class="form-label spacer">Health Board</label>
+      <select required="true" class="form-select" id="hb" name="hb" aria-label="Select which date to search for">
+        <option value="" selected disabled>Select which Health Board to search for</option>
+        <option value="NOT NULL">All</option>
+        {% for i in hb %}
+          <option value="'{{ i.hbname }}'">{{ i.hbname }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-6">
+        <label for="inputdate" class="form-label spacer">Specialty</label>
+        <select required="true" class="form-select" id="specialty" name="specialty" aria-label="Select which specialty to search for">
+            <option selected value="" disabled>Select which specialty to search for</option>
+            <option value="NOT NULL">All</option>
+            {% for i in specialty %}
+              <option value="'{{ i.specialty }}'">{{ i.specialty }}</option>
+            {% endfor %}
+        </select>
+      </div>
+    <div class="col-12 my-4">
+        <button class="btn btn-warning" type="submit">Search</button>
+    </div>
+  </form>
+</div>
+
+<div style="{{ gumpy }}" class="rcorner table-responsive">
+<table cellpadding="15p" class="table table-light table-striped table-bordered">
+  <thead>
+      <tr>
+          <th scope="col">Month</th>
+          <th scope="col">Health Board</th>
+          <th scope="col">Location</th>
+          <th scope="col">Specialty</th>
+          <th scope="col">Total Patients Seen</th>
+          <th scope="col">No. of patients waiting for less than 4 weeks (%)</th>
+          <th scope="col">No. of patients waiting between 5-8 weeks (%)</th>
+          <th scope="col">No. of patients waiting between 9-12 weeks (%)</th>
+          <th scope="col">No. of patients waiting between 13-16 weeks (%)</th>
+          <th scope="col">No. of patients waiting after more than 16 weeks (%)</th>
+          <th scope="col">No. of patients waiting more than 4 weeks (%)</th>
+          <th scope="col">Median Weeks waiting</th>
+          <th scope="col">Weeks waited at 90th centile</th>
+
+      </tr>
+  </thead>
+  <tbody>
+      <!-- TODO: Loop through the database entries to display them in this table -->
+      {% for example in data %}
+          <tr>
+              <td>{{ example.quarter }}</td>
+              <td>{{ example.hbname }}</td>
+              <td>{{ example.hscpname }}</td>
+              <td>{{ example.specialty }}</td>
+              <td>{{ example.patientsseen }}</td>
+              <td>{{ example.numberwhowaitedzerotofourweeks }} ({{ example.numberwhowaitedzerotofourweekspc}}%)</td>
+              <td>{{ example.numberwhowaitedfivetoeightweeks }} ({{ example.numberwhowaitedfivetoeightweekspc}}%)</td>
+              <td>{{ example.numberwhowaitedninetotwelveweeks }} ({{ example.numberwhowaitedninetotwelveweekspc}}%)</td>
+              <td>{{ example.numberwhowaitedthirteentosixteenweeks }} ({{ example.numberwhowaitedthirteentosixteenweekspc}}%)</td>
+              <td>{{ example.numberwhowaitedsixteenplusweeks }} ({{ example.numberwhowaitedsixteenplusweekspc}}%)</td>
+              <td>{{ example.numberwhowaitedfourplusweeks }} ({{ example.numberwhowaitedfourplusweekspc}}%)</td>
+              <td>{{ example.medianwaitweeks }}</td>
+              <td>{{ example.ninetiethpercentilewaitweeks }}</td>
+          </tr>
+      {% endfor %}
+  </tbody>
+</table>
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}

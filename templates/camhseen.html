@@ -1,0 +1,92 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    CAMHS Seen
+{% endblock %}
+
+{% block main %}
+
+<div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">Child and Adolescent Mental Health waiting times (SEEN)</h1>
+    <p class="text-center fs-4 ">Enter the parameters you wish to search by below to see the waiting times</p>
+</div>
+
+<div class="container rcorner spacer">
+  <form class="row g-3" action="/camh/" method="post">
+    <div class="col-md-12">
+      <label for="sorc" class="form-label spacer">See data on patients who were seen by month or patients still waiting?</label>
+      <select class="form-select" id="sorw" name="sorw" aria-label="simple or complex">
+        <option selected value="camhseenmar23">Patients who have been seen</option>
+        <option value="camhwaitmar23">Patients who are still waiting</option>
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="inputdate" class="form-label spacer">Month</label>
+      <select required="true" class="form-select" id="month" name="month" aria-label="Select which date to search for">
+          <option selected value="" disabled>Select which month to search for</option>
+          <option value="NOT NULL">All</option>
+          {% for i in months %}
+            <option value="'{{ i.month }}'">{{ i.month }}</option>
+          {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="inputPassword4" class="form-label spacer">Health Board</label>
+      <select required="true" class="form-select" id="hb" name="hb" aria-label="Select which date to search for">
+        <option value="" selected disabled>Select which Health Board to search for</option>
+        <option value="NOT NULL">All</option>
+        {% for i in hb %}
+          <option value="'{{ i.hb1 }}'">{{ i.hbname }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-12 my-4">
+        <button class="btn btn-warning" type="submit">Search</button>
+    </div>
+  </form>
+</div>
+
+<div style="{{ gumpy }}" class="rcorner table-responsive">
+<table cellpadding="15p" class="table table-light table-striped table-bordered">
+  <thead>
+      <tr>
+          <th scope="col">Month</th>
+          <th scope="col">Health Board</th>
+          <th scope="col">Total Patients Seen</th>
+          <th scope="col">No. of patients seen in less than 18 weeks</th>
+          <th scope="col">No. of patients seen between 19-35 weeks wait</th>
+          <th scope="col">No. of patients seen between 36-52 weeks wait</th>
+          <th scope="col">No. of patients seen after more than 52 weeks wait</th>
+          <th scope="col">Median Weeks waited</th>
+          <th scope="col">90th Percentile Weeks waited</th>
+      </tr>
+  </thead>
+  <tbody>
+      <!-- TODO: Loop through the database entries to display them in this table -->
+      {% for example in data %}
+          <tr>
+              <td>{{ example.month }}</td>
+              <td>{{ example.hbname }}</td>
+              <td>{{ example.totalpatientsseen }}</td>
+              <td>{{ example.numberofpatientsseen0to18weeks }}</td>
+              <td>{{ example.numberofpatientsseen19to35weeks }}</td>
+              <td>{{ example.numberofpatientsseen36to52weeks }}</td>
+              <td>{{ example.numberofpatientsseenover52weeks }}</td>
+              <td>{{ example.medianweekspatientsseen }}</td>
+              <td>{{ example.w90thpercentileweekspatientsseen }}</td>
+          </tr>
+      {% endfor %}
+  </tbody>
+</table>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

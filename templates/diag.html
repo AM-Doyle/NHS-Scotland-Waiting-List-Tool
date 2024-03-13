@@ -1,0 +1,117 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Diagnostic Procedures
+{% endblock %}
+
+{% block main %}
+
+<div class="container-fluid py-5">
+    <h1 class="display-5 fw-bold">Diagnostic Procedures Waiting List</h1>
+    <p class="text-center fs-4">Enter the parameters you wish to search by below to see the waiting times</p>
+</div>
+
+<div class="container rcorner spacer">
+  <form class="row g-3" action="/diag/" method="post">
+    <div class="col-md-6">
+      <label for="inputdate" class="form-label spacer">Month</label>
+      <select required="true" class="form-select" id="month" name="month" aria-label="Select which date to search for">
+          <option selected value="" disabled>Select which month</option>
+          <option value="NOT NULL">All</option>
+          {% for i in months %}
+            <option value="'{{ i.monthending }}'">{{ i.monthending }}</option>
+          {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="inputPassword4" class="form-label spacer">Health Board</label>
+      <select required="true" class="form-select" id="hb" name="hb" aria-label="Select which date to search for">
+        <option value="" selected disabled>Select which Health Board to search for</option>
+        <option value="NOT NULL">All</option>
+        {% for i in hb %}
+          <option value="'{{ i.hb1 }}'">{{ i.hbname }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label for="inputPassword4" class="form-label spacer">Specific Test</label>
+      <select required="true" class="form-select" id="spectest" name="spectest" aria-label="Select which date to search for">
+        <option value="" selected disabled>Select which Specific Test to search for</option>
+        <option value="NOT NULL">All</option>
+        {% for i in spectest %}
+          <option value="'{{ i.diagnostictestdescription }}'">{{ i.diagnostictestdescription }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-12 my-4">
+      <button class="btn btn-warning" type="submit">Search</button>
+    </div>
+  </form>
+</div>
+
+
+<div style="{{ gumpy }}" class="rcorner table-responsive">
+  <label for="complex table" class="form-label">Table shows number of patients that are waiting and for how long (in days).</label>
+<table style="font-size: 13px;" cellpadding="10p" class="table table-light table-striped table-bordered">
+  <thead>
+      <tr>
+          <th scope="col">Month</th>
+          <th scope="col">Health Board</th>
+          <th scope="col">Test Type</th>
+          <th scope="col">Test Description</th>
+          <th scope="col">Total Waiting</th>
+          <th scope="col">0-7</th>
+          <th scope="col">8-14</th>
+          <th scope="col">15-21</th>
+          <th scope="col">22-28</th>
+          <th scope="col">29-35</th>
+          <th scope="col">36-42</th>
+          <th scope="col">43-49</th>
+          <th scope="col">50-56</th>
+          <th scope="col">57-63</th>
+          <th scope="col">64-70</th>
+          <th scope="col">71-77</th>
+          <th scope="col">78-84</th>
+          <th scope="col">85-91</th>
+          <th scope="col">92-182</th>
+          <th scope="col">183-273</th>
+          <th scope="col">274-364</th>
+          <th scope="col">over 365</th>
+
+      </tr>
+  </thead>
+  <tbody>
+      <!-- TODO: Loop through the database entries to display them in this table -->
+      {% for example in titles %}
+          <tr>
+              <td>{{ example.monthending }}</td>
+              <td>{{ example.hbname }}</td>
+              <td>{{ example.diagnostictesttype }}</td>
+              <td>{{ example.diagnostictestdescription }}</td>
+              <td>{{ example.total }}</td>
+              <td>{{ example.0 }}</td>
+              <td>{{ example.1 }}</td>
+              <td>{{ example.2 }}</td>
+              <td>{{ example.3 }}</td>
+              <td>{{ example.4 }}</td>
+              <td>{{ example.5 }}</td>
+              <td>{{ example.6 }}</td>
+              <td>{{ example.7 }}</td>
+              <td>{{ example.8 }}</td>
+              <td>{{ example.9 }}</td>
+              <td>{{ example.10 }}</td>
+              <td>{{ example.11 }}</td>
+              <td>{{ example.12 }}</td>
+              <td>{{ example.13 }}</td>
+              <td>{{ example.14 }}</td>
+              <td>{{ example.15 }}</td>
+              <td>{{ example.16 }}</td>
+          </tr>
+      {% endfor %}
+  </tbody>
+</table>
+</div>
+
+
+
+{% endblock %}
